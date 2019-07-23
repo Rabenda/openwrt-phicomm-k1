@@ -19,7 +19,7 @@ ENV LC_ALL en_US.UTF-8
 RUN apt install -y -qq --no-install-recommends neofetch \
 	sudo nano file \
 	git-core build-essential libssl-dev libncurses5-dev unzip \
-	subversion mercurial gawk wget ca-certificates 
+	subversion mercurial gawk wget ca-certificates curl
 
 # Set user info
 RUN useradd --create-home --no-log-init --shell /bin/bash builder && \
@@ -38,5 +38,13 @@ ADD config/.config .config
 
 # compile
 RUN make -j $(expr $(nproc) + 1)
+
+ADD upload/upload-github-release-asset.sh upload-github-release-asset.sh
+RUN bash upload-github-release-asset.sh \
+	github_api_token=${TOKEN} \
+	owner=rabenda \
+	repo=openwrt-phicomm-k1 \
+	tag=v$(date +%Y.%m.%d.%H.%M) \
+	filename=bin/targets/ramips/mt7620/openwrt-ramips-mt7620-phicomm_psg1208-squashfs-sysupgrade.bin
 
 CMD ["bash"]
