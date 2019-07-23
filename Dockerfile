@@ -39,6 +39,7 @@ ADD config/.config .config
 # compile
 RUN make -j $(expr $(nproc) + 1)
 
+ARG TOKEN
 ADD upload/upload-github-release-asset.sh upload-github-release-asset.sh
 RUN bash upload-github-release-asset.sh \
 	github_api_token=${TOKEN} \
