@@ -1,9 +1,11 @@
 language: cpp
 sudo: false
+dist: bionic
 notifications:
   email: false
 
 compiler: gcc
+env: DEBIAN_FRONTEND=noninteractive
 
 install:
   - sudo apt update -qq && sudo apt upgrade -qq
