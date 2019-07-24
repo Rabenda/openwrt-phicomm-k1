@@ -9,8 +9,8 @@ env: DEBIAN_FRONTEND=noninteractive
 
 install:
   - sudo apt update -qq && sudo apt upgrade -qq
-  - sudo apt install -y -qq --no-install-recommends neofetch nano file \
-        git-core build-essential libssl-dev libncurses5-dev unzip \
+  - sudo apt install -y -qq --no-install-recommends neofetch nano file
+        git-core build-essential libssl-dev libncurses5-dev unzip
         subversion mercurial gawk wget ca-certificates curl
 
 script:
@@ -20,10 +20,10 @@ script:
   - cp ../config/.config .
   - make -j $(expr $(nproc) + 1)
   - cp ../upload/upload-github-release-asset.sh .
-  - bash upload-github-release-asset.sh \
-    github_api_token=${TOKEN} \
-    owner=rabenda \
-    repo=openwrt-phicomm-k1 \
-    tag=v$(date +%Y.%m.%d.%H.%M) \
+  - bash upload-github-release-asset.sh
+    github_api_token=${TOKEN}
+    owner=rabenda
+    repo=openwrt-phicomm-k1
+    tag=v$(date +%Y.%m.%d.%H.%M)
     filename=bin/targets/ramips/mt7620/openwrt-ramips-mt7620-phicomm_psg1208-squashfs-sysupgrade.bin
   - echo "Build Finish and Deploy finish"
