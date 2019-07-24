@@ -18,7 +18,7 @@ script:
   - cd openwrt
   - ./scripts/feeds update -a && ./scripts/feeds install -a
   - cp ../config/.config .
-  - make -j $(expr $(nproc) + 1)
+  - make V=s -j1
   - cp ../upload/upload-github-release-asset.sh .
   - bash upload-github-release-asset.sh
     github_api_token=${TOKEN}
