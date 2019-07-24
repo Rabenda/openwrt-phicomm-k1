@@ -1,5 +1,5 @@
 language: cpp
-sudo: false
+sudo: required
 dist: bionic
 notifications:
   email: false
@@ -18,7 +18,7 @@ script:
   - cd openwrt
   - ./scripts/feeds update -a && ./scripts/feeds install -a
   - cp ../config/.config .
-  - make V=s -j1
+  - make V=s -j2
   - cp ../upload/upload-github-release-asset.sh .
   - bash upload-github-release-asset.sh
     github_api_token=${TOKEN}
