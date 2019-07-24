@@ -5,7 +5,6 @@ notifications:
   email: false
 
 compiler: gcc
-env: DEBIAN_FRONTEND=noninteractive
 
 install:
   - sudo apt update -qq && sudo apt upgrade -qq
@@ -14,11 +13,12 @@ install:
         subversion mercurial gawk wget ca-certificates curl
 
 script:
-  - git clone https://git.openwrt.org/openwrt/openwrt.git
+  - git clone --depth=1 https://git.openwrt.org/openwrt/openwrt.git openwrt
   - cd openwrt
   - ./scripts/feeds update -a && ./scripts/feeds install -a
   - cp ../config/.config .
-  - make V=s -j2
+  - make defconfig
+  - make -j$(($(nproc)+1))
   - cp ../upload/upload-github-release-asset.sh .
   - bash upload-github-release-asset.sh
     github_api_token=${TOKEN}
