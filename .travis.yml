@@ -10,9 +10,11 @@ install:
   - sudo apt update -qq && sudo apt upgrade -qq
   - sudo apt install -y -qq --no-install-recommends neofetch nano file
         git-core build-essential libssl-dev libncurses5-dev unzip
-        subversion mercurial gawk wget ca-certificates curl
+        subversion mercurial gawk wget ca-certificates curl python-virtualenv
 
 script:
+  - virtualenv venv
+  - source venv/bin/activate
   - git clone --depth=1 https://git.openwrt.org/openwrt/openwrt.git openwrt
   - cd openwrt
   - ./scripts/feeds update -a && ./scripts/feeds install -a
@@ -26,4 +28,5 @@ script:
     repo=openwrt-phicomm-k1
     tag=v$(date +%Y.%m.%d.%H.%M)
     filename=bin/targets/ramips/mt7620/openwrt-ramips-mt7620-phicomm_psg1208-squashfs-sysupgrade.bin
+  - deactivate
   - echo "Build Finish and Deploy finish"
