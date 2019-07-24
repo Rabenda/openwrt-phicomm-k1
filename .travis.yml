@@ -20,7 +20,7 @@ script:
   - ./scripts/feeds update -a && ./scripts/feeds install -a
   - cp ../config/.config .
   - make defconfig
-  - make -j$(($(nproc)+1))
+  - make V=s -j $(nproc)
   - cp ../upload/upload-github-release-asset.sh .
   - bash upload-github-release-asset.sh
     github_api_token=${TOKEN}
